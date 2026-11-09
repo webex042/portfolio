@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/*
+ * The Engineering Studio — tokens.
+ * Paper is a cool drafting grey-white, ink is graphite, cobalt is the only
+ * accent and is reserved for things you can act on or follow. Signal colours
+ * appear only in result tables and diagrams, where they carry meaning.
+ */
+:root {
+  --paper: #eef0ec;
+  --surface: #f8f9f6;
+  --sunken: #e5e8e2;
+  --ink: #191c21;
+  --ink-2: #444a54;
+  --ink-3: #5f6570;
+  --rule: #d3d7cf;
+  --rule-strong: #b3b8b0;
+  --cobalt: #2340d3;
+  --cobalt-strong: #1a31a8;
+  --cobalt-wash: #dfe5fb;
+  --on-cobalt: #ffffff;
+  --met: #2f6b45;
+  --missed: #a5392a;
+  --info: #5f6570;
+  --grid-line: rgba(25, 28, 33, 0.055);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #14161a;
+  --surface: #1b1e23;
+  --sunken: #101215;
+  --ink: #e8eae4;
+  --ink-2: #b6bbc2;
+  --ink-3: #8f959e;
+  --rule: #2b2f36;
+  --rule-strong: #3d424a;
+  --cobalt: #8fa2ff;
+  --cobalt-strong: #b3c0ff;
+  --cobalt-wash: #1f274d;
+  --on-cobalt: #0e1330;
+  --met: #7cc196;
+  --missed: #f08a76;
+  --info: #8f959e;
+  --grid-line: rgba(232, 234, 228, 0.045);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-fragment), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-strong: var(--cobalt-strong);
+  --color-cobalt-wash: var(--cobalt-wash);
+  --color-on-cobalt: var(--on-cobalt);
+  --color-met: var(--met);
+  --color-missed: var(--missed);
+  --color-info: var(--info);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-stretch: 100%;
+    font-feature-settings: "ss01", "kern";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--cobalt); color: var(--on-cobalt); }
+  :focus-visible {
+    outline: 2px solid var(--cobalt);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 48rem) { .wrap { padding-inline: 2rem; } }
+  @media (min-width: 80rem) { .wrap { padding-inline: 2.5rem; } }
+
+  /* Display type: Archivo pushed wide. The width carries the personality. */
+  .display {
+    font-stretch: 122%;
+    font-weight: 640;
+    letter-spacing: -0.025em;
+    line-height: 0.96;
+  }
+  .heading {
+    font-stretch: 112%;
+    font-weight: 620;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+  }
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: var(--ink-3);
+  }
+  .lead {
+    font-size: clamp(1.125rem, 1.02rem + 0.4vw, 1.3125rem);
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .measure { max-width: 64ch; }
+
+  /* Buttons: three levels, one shape. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 2.875rem;
+    padding: 0.7rem 1.15rem;
+    border: 1px solid var(--ink);
+    border-radius: 0.375rem;
+    font-size: 0.96875rem;
+    font-weight: 560;
+    font-stretch: 104%;
+    line-height: 1.1;
+    white-space: nowrap;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--cobalt); border-color: var(--cobalt); color: var(--on-cobalt); }
+  .btn-primary:hover { background: var(--cobalt-strong); border-color: var(--cobalt-strong); }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: transparent; color: var(--ink); }
+  .btn-line { background: transparent; color: var(--ink); border-color: var(--rule-strong); }
+  .btn-line:hover { border-color: var(--ink); background: var(--surface); }
+  .btn-sm { min-height: 2.25rem; padding: 0.45rem 0.8rem; font-size: 0.875rem; }
+
+  .link {
+    color: var(--cobalt);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: color-mix(in srgb, var(--cobalt) 45%, transparent);
+    transition: text-decoration-color 150ms ease;
+  }
+  .link:hover { text-decoration-color: var(--cobalt); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--rule);
+    border-radius: 0.25rem;
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 0.78125rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  /* Faint drafting grid, used only behind the hero and diagrams. */
+  .drafting-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .rule-top { border-top: 1px solid var(--rule); }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/* SVG diagrams inherit tokens. */
+.dg-ink { stroke: var(--ink); }
+.dg-rule { stroke: var(--rule-strong); }
+.dg-cobalt { stroke: var(--cobalt); }
+.dg-fill-surface { fill: var(--surface); }
+.dg-fill-paper { fill: var(--paper); }
+.dg-fill-cobalt { fill: var(--cobalt); }
+.dg-text { fill: var(--ink); }
+.dg-text-2 { fill: var(--ink-2); }
+.dg-text-3 { fill: var(--ink-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* One orchestrated entrance for the hero, nothing else animates on load. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-in { animation: rise 680ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.edge-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 900ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Registration marks on the portrait plate, as on a drafting sheet. */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  pointer-events: none;
+  --m: var(--cobalt);
+  background:
+    linear-gradient(var(--m), var(--m)) left top / 16px 1px no-repeat,
+    linear-gradient(var(--m), var(--m)) left top / 1px 16px no-repeat,
+    linear-gradient(var(--m), var(--m)) right top / 16px 1px no-repeat,
+    linear-gradient(var(--m), var(--m)) right top / 1px 16px no-repeat,
+    linear-gradient(var(--m), var(--m)) left bottom / 16px 1px no-repeat,
+    linear-gradient(var(--m), var(--m)) left bottom / 1px 16px no-repeat,
+    linear-gradient(var(--m), var(--m)) right bottom / 16px 1px no-repeat,
+    linear-gradient(var(--m), var(--m)) right bottom / 1px 16px no-repeat;
+}
+
+/* Tools ticker: continuous, slow, pausable. */
+@keyframes ticker { to { transform: translateX(-50%); } }
+.ticker-track { animation: ticker 70s linear infinite; }
+.ticker:hover .ticker-track,
+.ticker:focus-visible .ticker-track,
+.ticker:focus-within .ticker-track,
+.ticker[data-paused] .ticker-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; width: auto; flex-wrap: wrap; }
+  .ticker-track > ul + ul { display: none; }
+  .ticker-row { flex-wrap: wrap; row-gap: 0.75rem; }
+  .ticker-toggle { display: none; }
+}
+
+/* Scroll reveal. Content is visible without JavaScript; the class is added by
+   the theme script, so only script-enabled visitors get the entrance. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 620ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.js .reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn:disabled:active { transform: none; }
+
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.menu-in { animation: menu-in 180ms ease-out both; }
